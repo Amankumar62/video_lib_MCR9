@@ -20,3 +20,13 @@ a {
   flex-wrap: wrap;
   margin-top: 2rem;
 }
+button {
+  padding: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: #007fff;
+  border-radius: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+}

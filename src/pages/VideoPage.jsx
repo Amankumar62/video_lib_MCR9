@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  MdWatchLater,
+  MdPlaylistAdd,
+  MdOutlinePlaylistAddCheck,
+} from "react-icons/md";
 import { VideoContext } from "../context/VideoContext";
 import "./VideoPage.css";
 
 const VideoPage = () => {
   const { videoId } = useParams();
-  const { getVideoDetail, videos } = useContext(VideoContext);
+  const { getVideoDetail, videos, toggleWatchLater, isWatchLater } =
+    useContext(VideoContext);
   const video = getVideoDetail(videoId);
   const navigate = useNavigate();
   return (
@@ -17,10 +23,26 @@ const VideoPage = () => {
           width="700"
           height="400"
         ></embed>
-        <div>
-          <img src="https://picsum.photos/40/40" alt={video?.creator} />
-          <h4>{video?.title}</h4>
-          <div>{/* <h2></h2> */}</div>
+        <div className="video-title">
+          <div>
+            <img src="https://picsum.photos/40/40" alt={video?.creator} />
+            <h4>{video?.title}</h4>
+          </div>
+          <div>
+            <span
+              style={{ color: isWatchLater(video?._id) ? "#72bcd4" : "" }}
+              className="icon"
+              onClick={() => toggleWatchLater(video?._id)}
+            >
+              <MdWatchLater />
+            </span>
+            <span className="icon">
+              <MdPlaylistAdd />
+            </span>
+            <span className="icon">
+              <MdOutlinePlaylistAddCheck />
+            </span>
+          </div>
         </div>
         <div>
           <h2>My Notes</h2>

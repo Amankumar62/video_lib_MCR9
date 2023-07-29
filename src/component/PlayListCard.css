@@ -1,0 +1,9 @@
+.playlist-image-section {
+  position: relative;
+}
+.playlist-image-section span {
+  position: absolute;
+  right: -0.2rem;
+  top: -1.2rem;
+  cursor: pointer;
+}

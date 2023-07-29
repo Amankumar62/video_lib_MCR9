@@ -28,7 +28,9 @@
 }
 .video-card-watchlater {
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  right: 0rem;
   font-size: 1.6rem;
+  background-color: #fff;
+  padding: 0.2rem;
+  border-bottom-left-radius: 1rem;
 }

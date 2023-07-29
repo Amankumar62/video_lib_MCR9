@@ -6,7 +6,7 @@ import { VideoContext } from "../context/VideoContext";
 
 const VideoCard = ({ _id, title, views, thumbnail, category, creator }) => {
   const navigate = useNavigate();
-  const { toggleWatchLater } = useContext(VideoContext);
+  const { toggleWatchLater, isWatchLater } = useContext(VideoContext);
   return (
     <div
       className="video-card-container"
@@ -24,6 +24,7 @@ const VideoCard = ({ _id, title, views, thumbnail, category, creator }) => {
             e.stopPropagation();
             toggleWatchLater(_id);
           }}
+          style={{ color: isWatchLater(_id) ? "#72bcd4" : "" }}
         >
           <MdWatchLater />
         </span>

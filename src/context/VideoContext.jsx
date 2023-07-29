@@ -12,6 +12,13 @@ const videoReducer = (prevState, { type, payload }) => {
         ...prevState,
         watchlater: prevState.watchlater.filter((id) => id !== payload),
       };
+    case "CREATE_PLAYLIST":
+      return { ...prevState, playlists: [...prevState.playlists, payload] };
+    case "REMOVE_PLAYLIST":
+      return {
+        ...prevState,
+        playlists: prevState.playlists.filter(({ _id }) => _id !== payload),
+      };
     default:
       return prevState;
   }
@@ -21,6 +28,7 @@ export const VideoProvider = ({ children }) => {
   const [videoData, dispatch] = useReducer(videoReducer, {
     videos: videos,
     watchlater: [],
+    playlists: [],
   });
 
   const getCategoryVideos = (categoryName) => {
@@ -54,15 +62,34 @@ export const VideoProvider = ({ children }) => {
     return videoData.videos.find(({ _id }) => _id === Number(id));
   };
 
+  const createPlaylist = (name, description) => {
+    const playlist = {
+      _id: Math.round(Math.random() * 1000),
+      name: name,
+      description: description,
+      thumbnail: "https://picsum.photos/250/200",
+      videos: [],
+    };
+    dispatch({ type: "CREATE_PLAYLIST", payload: playlist });
+  };
+
+  const removePlaylist = (id) => {
+    dispatch({ type: "REMOVE_PLAYLIST", payload: id });
+  };
+
   return (
     <VideoContext.Provider
       value={{
         videos: videoData.videos,
         watchlater: videoData.watchlater,
+        playlists: videoData.playlists,
         getCategoryVideos,
         getVideoDetail,
         toggleWatchLater,
+        isWatchLater,
         getWatchLaterVideos,
+        createPlaylist,
+        removePlaylist,
       }}
     >
       {children}

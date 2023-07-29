@@ -15,7 +15,7 @@
 }
 .video-page-first-section div {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 1rem;
   gap: 1rem;
   align-items: center;
   padding-bottom: 1rem;
@@ -38,4 +38,12 @@
 }
 .more-videos img {
   width: 50%;
+}
+.video-title {
+  display: flex;
+  justify-content: space-between;
+}
+.icon {
+  font-size: 1.6rem;
+  cursor: pointer;
 }

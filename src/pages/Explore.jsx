@@ -1,10 +1,10 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useContext, useReducer } from "react";
 import { VideoContext } from "../context/VideoContext";
 import VideoCard from "../component/VideoCard";
 const queryReducer = (prevState, { type, payload }) => {
   switch (type) {
     case "ADD_QUERY":
-      return payload;
+      return { query: payload };
     case "default":
       return prevState;
   }
@@ -12,13 +12,14 @@ const queryReducer = (prevState, { type, payload }) => {
 const Explore = () => {
   const { videos } = useContext(VideoContext);
 
-  const [query, dispatch] = useReducer(queryReducer, "");
+  const [queryD, dispatch] = useReducer(queryReducer, {
+    query: "",
+  });
 
-  console.log(query);
-  let queryData = videos.filter(
-    (video) => video.title.toLowerCase() === query.trim().toLowerCase()
+  console.log(queryD.query);
+  let queryData = videos.filter(({ title }) =>
+    title.toLowerCase().includes(queryD.query.trim().toLowerCase())
   );
-  console.log(queryData);
 
   return (
     <div>
@@ -30,7 +31,7 @@ const Explore = () => {
         }
       />
       <div className="listing">
-        {videos.map((video) => (
+        {queryData.map((video) => (
           <VideoCard key={video._id} {...video} />
         ))}
       </div>

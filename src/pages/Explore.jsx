@@ -1,5 +1,6 @@
 import React, { useContext, useReducer } from "react";
 import { VideoContext } from "../context/VideoContext";
+import "./Explore.css";
 import VideoCard from "../component/VideoCard";
 const queryReducer = (prevState, { type, payload }) => {
   switch (type) {
@@ -16,7 +17,6 @@ const Explore = () => {
     query: "",
   });
 
-  console.log(queryD.query);
   let queryData = videos.filter(({ title }) =>
     title.toLowerCase().includes(queryD.query.trim().toLowerCase())
   );
@@ -25,7 +25,9 @@ const Explore = () => {
     <div>
       <h1>Explore</h1>
       <input
+        className="input"
         type="search"
+        placeholder="search videos"
         onChange={(e) =>
           dispatch({ type: "ADD_QUERY", payload: e.target.value })
         }

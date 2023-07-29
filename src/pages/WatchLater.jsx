@@ -9,9 +9,11 @@ const WatchLater = () => {
     <div>
       <h1>Watch Later</h1>
       <div className="listing">
-        {videos.map((video) => (
-          <VideoCard key={video._id} {...video} />
-        ))}
+        {videos.length === 0 ? (
+          <h2>No Video added </h2>
+        ) : (
+          videos.map((video) => <VideoCard key={video._id} {...video} />)
+        )}
       </div>
     </div>
   );

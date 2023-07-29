@@ -30,15 +30,24 @@ export const VideoProvider = ({ children }) => {
   };
 
   const isWatchLater = (videoId) => {
-    return videoData.watchlater.find((id) => id === videoId);
+    return videoData.watchlater.find((id) => id === videoId) !== undefined
+      ? true
+      : false;
   };
 
   const toggleWatchLater = (videoId) => {
-    if (isWatchLater(videoId)) {
+    if (!isWatchLater(videoId)) {
+      console.log("enter");
       dispatch({ type: "ADD_TO_WATCHLATER", payload: videoId });
     } else {
       dispatch({ type: "REMOVE_FROM_WATCHLATER", payload: videoId });
     }
+  };
+
+  const getWatchLaterVideos = () => {
+    return videoData.videos.filter(({ _id }) =>
+      videoData.watchlater.find((id) => id === _id)
+    );
   };
 
   const getVideoDetail = (id) => {
@@ -53,6 +62,7 @@ export const VideoProvider = ({ children }) => {
         getCategoryVideos,
         getVideoDetail,
         toggleWatchLater,
+        getWatchLaterVideos,
       }}
     >
       {children}

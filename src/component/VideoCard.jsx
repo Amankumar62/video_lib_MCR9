@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./VideoCard.css";
+import { MdWatchLater } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { VideoContext } from "../context/VideoContext";
 
 const VideoCard = ({ _id, title, views, thumbnail, category, creator }) => {
   const navigate = useNavigate();
+  const { toggleWatchLater } = useContext(VideoContext);
   return (
     <div
       className="video-card-container"
@@ -15,7 +18,15 @@ const VideoCard = ({ _id, title, views, thumbnail, category, creator }) => {
           alt={title}
           className="video-card-container-thumbnail"
         />
-        <span className="video-card-watchlater">Lat</span>
+        <span
+          className="video-card-watchlater"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWatchLater(_id);
+          }}
+        >
+          <MdWatchLater />
+        </span>
       </div>
       <div className="video-card-description">
         <img src="https://picsum.photos/40/40" alt={creator} />

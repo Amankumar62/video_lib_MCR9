@@ -1,0 +1,22 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 3rem;
+}
+a {
+  text-decoration: none;
+}
+
+.listing {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

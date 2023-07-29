@@ -1,0 +1,34 @@
+.video-card-container {
+  width: 300px;
+  min-height: fit-content;
+  cursor: pointer;
+}
+.video-card-description {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  word-wrap: break-word;
+}
+.video-card-image-container {
+  position: relative;
+}
+.video-card-container-thumbnail {
+  width: 300px;
+  height: 200px;
+  object-fit: fill;
+}
+.video-card-description > img {
+  border-radius: 50%;
+}
+.video-card-description > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.video-card-watchlater {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  background-color: #fff;
+}

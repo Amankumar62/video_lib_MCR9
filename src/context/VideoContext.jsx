@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 import { videos } from "../data";
 
 export const VideoContext = createContext();
@@ -47,7 +47,7 @@ export const VideoProvider = ({ children }) => {
     playlists: [],
     notes: [],
   });
-
+  const [shouldGet, setshouldGet] = useState(true);
   const getCategoryVideos = (categoryName) => {
     return videoData.videos.filter(
       ({ category }) => category.toLowerCase() === categoryName.toLowerCase()
@@ -115,10 +115,13 @@ export const VideoProvider = ({ children }) => {
 
   useEffect(() => {
     const data = localStorage.getItem("videoData");
-    if (data !== undefined) {
-      dispatch({ type: "SET_DATA", payload: JSON.parse(data) });
+    if (shouldGet) {
+      if (data !== undefined) {
+        dispatch({ type: "SET_DATA", payload: JSON.parse(data) });
+        setshouldGet(false);
+      }
     }
-  }, []);
+  }, [shouldGet]);
 
   useEffect(() => {
     localStorage.setItem("videoData", JSON.stringify(videoData));

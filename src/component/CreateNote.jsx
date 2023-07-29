@@ -8,10 +8,15 @@ const CreateNote = ({ close, id, preText, edit }) => {
     if (edit) {
       editNote(preText._id, text);
     } else {
-      addNote(Number(id), text);
+      if (!text || text.trim() === "") {
+        return;
+      } else {
+        addNote(Number(id), text);
+      }
     }
     close();
   };
+  console.log(text);
   return (
     <div className="create-note-container">
       <h2>Add Note</h2>
@@ -22,6 +27,7 @@ const CreateNote = ({ close, id, preText, edit }) => {
         cols={40}
         value={text}
         onChange={(e) => setText(e.target.value)}
+        required
       />
       <button onClick={handleSubmit}>Add Note</button>
     </div>

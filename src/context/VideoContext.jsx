@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { videos } from "../data";
 
 export const VideoContext = createContext();
@@ -12,6 +12,8 @@ const videoReducer = (prevState, { type, payload }) => {
         ...prevState,
         watchlater: prevState.watchlater.filter((id) => id !== payload),
       };
+    case "SET_DATA":
+      return payload;
     case "CREATE_PLAYLIST":
       return { ...prevState, playlists: [...prevState.playlists, payload] };
     case "REMOVE_PLAYLIST":
@@ -110,6 +112,18 @@ export const VideoProvider = ({ children }) => {
   const editNote = (id, note) => {
     dispatch({ type: "EDIT_NOTE", payload: { id: id, note: note } });
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem("videoData");
+    if (data !== undefined) {
+      dispatch({ type: "SET_DATA", payload: JSON.parse(data) });
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("videoData", JSON.stringify(videoData));
+  }, [videoData]);
+
   return (
     <VideoContext.Provider
       value={{

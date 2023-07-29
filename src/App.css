@@ -9,9 +9,12 @@
   align-items: center;
   gap: 2rem;
   padding-top: 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 a {
   text-decoration: none;
+  color: #000;
 }
 
 .listing {

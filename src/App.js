@@ -3,6 +3,10 @@ import "./App.css";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Playlist from "./pages/PlayList";
+import { AiOutlineHome } from "react-icons/ai";
+import { MdOutlineExplore } from "react-icons/md";
+import { BiSolidPlaylist } from "react-icons/bi";
+import { MdOutlineWatchLater } from "react-icons/md";
 import WatchLater from "./pages/WatchLater";
 import Layout from "./component/Layout";
 import CategoryPage from "./pages/CategoryPage";
@@ -12,10 +16,22 @@ function App() {
   return (
     <div className="App">
       <aside className="sidebar">
-        <Link to="/">Home</Link>
-        <Link to="/explore">Explore</Link>
-        <Link to="/playlist">Playlist</Link>
-        <Link to="/watchlater">Watch Later</Link>
+        <Link to="/">
+          <AiOutlineHome />
+          Home
+        </Link>
+        <Link to="/explore">
+          <MdOutlineExplore />
+          Explore
+        </Link>
+        <Link to="/playlist">
+          <BiSolidPlaylist />
+          Playlist
+        </Link>
+        <Link to="/watchlater">
+          <MdOutlineWatchLater />
+          Watch Later
+        </Link>
       </aside>
       <Routes>
         <Route path="/" element={<Layout />}>

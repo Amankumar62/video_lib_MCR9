@@ -19,6 +19,20 @@ const videoReducer = (prevState, { type, payload }) => {
         ...prevState,
         playlists: prevState.playlists.filter(({ _id }) => _id !== payload),
       };
+    case "ADD_NOTE":
+      return { ...prevState, notes: [...prevState.notes, payload] };
+    case "DELETE_NOTE":
+      return {
+        ...prevState,
+        notes: prevState.notes.filter(({ _id }) => _id !== payload),
+      };
+    case "EDIT_NOTE":
+      return {
+        ...prevState,
+        notes: prevState.notes.map((item) =>
+          item._id === payload.id ? { ...item, note: payload.note } : item
+        ),
+      };
     default:
       return prevState;
   }
@@ -29,6 +43,7 @@ export const VideoProvider = ({ children }) => {
     videos: videos,
     watchlater: [],
     playlists: [],
+    notes: [],
   });
 
   const getCategoryVideos = (categoryName) => {
@@ -77,12 +92,31 @@ export const VideoProvider = ({ children }) => {
     dispatch({ type: "REMOVE_PLAYLIST", payload: id });
   };
 
+  const addNote = (id, note) => {
+    const noteObj = {
+      _id: Math.round(Math.random() * 1000),
+      videoId: id,
+      note: note,
+    };
+    dispatch({ type: "ADD_NOTE", payload: noteObj });
+  };
+
+  const getVideoNotes = (id) => {
+    return videoData.notes.filter(({ videoId }) => videoId === Number(id));
+  };
+  const deleteNote = (id) => {
+    dispatch({ type: "DELETE_NOTE", payload: id });
+  };
+  const editNote = (id, note) => {
+    dispatch({ type: "EDIT_NOTE", payload: { id: id, note: note } });
+  };
   return (
     <VideoContext.Provider
       value={{
         videos: videoData.videos,
         watchlater: videoData.watchlater,
         playlists: videoData.playlists,
+        notes: videoData.notes,
         getCategoryVideos,
         getVideoDetail,
         toggleWatchLater,
@@ -90,6 +124,10 @@ export const VideoProvider = ({ children }) => {
         getWatchLaterVideos,
         createPlaylist,
         removePlaylist,
+        addNote,
+        getVideoNotes,
+        deleteNote,
+        editNote,
       }}
     >
       {children}

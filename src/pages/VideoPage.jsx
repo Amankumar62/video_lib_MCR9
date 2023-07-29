@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { BsPencil } from "react-icons/bs";
+import { AiFillDelete } from "react-icons/ai";
 import {
   MdWatchLater,
   MdPlaylistAdd,
@@ -7,15 +9,35 @@ import {
 } from "react-icons/md";
 import { VideoContext } from "../context/VideoContext";
 import "./VideoPage.css";
+import Modal from "../component/Modal";
+import CreateNote from "../component/CreateNote";
 
 const VideoPage = () => {
   const { videoId } = useParams();
-  const { getVideoDetail, videos, toggleWatchLater, isWatchLater } =
-    useContext(VideoContext);
+  const {
+    getVideoDetail,
+    videos,
+    toggleWatchLater,
+    isWatchLater,
+    getVideoNotes,
+    deleteNote,
+  } = useContext(VideoContext);
   const video = getVideoDetail(videoId);
+  const notes = getVideoNotes(videoId);
   const navigate = useNavigate();
+  const [openNote, setOpenNote] = useState(false);
+  const [editNote, setEditNote] = useState(false);
   return (
     <div className="video-page-container">
+      <Modal open={openNote} close={() => setOpenNote(false)}>
+        <CreateNote
+          close={() => setOpenNote(false)}
+          id={videoId}
+          preText={""}
+          edit={false}
+        />
+      </Modal>
+
       <div className="video-page-first-section">
         <embed
           type="video/webm"
@@ -39,13 +61,40 @@ const VideoPage = () => {
             <span className="icon">
               <MdPlaylistAdd />
             </span>
-            <span className="icon">
+            <span className="icon" onClick={() => setOpenNote(true)}>
               <MdOutlinePlaylistAddCheck />
             </span>
           </div>
         </div>
-        <div>
+        <div className="notes-listing">
           <h2>My Notes</h2>
+          <div className="notes-listing">
+            {notes.length === 0 ? (
+              <p className="font-inc">No Notes added</p>
+            ) : (
+              notes.map((note) => (
+                <div key={note?._id} className="note">
+                  <p>{note?.note}</p>
+                  <div>
+                    <Modal open={editNote} close={() => setEditNote(false)}>
+                      <CreateNote
+                        close={() => setEditNote(false)}
+                        preText={note}
+                        id={videoId}
+                        edit={true}
+                      />
+                    </Modal>
+                    <span onClick={() => setEditNote(true)}>
+                      <BsPencil className="icon" />
+                    </span>
+                    <span onClick={() => deleteNote(note?._id)}>
+                      <AiFillDelete className="icon" />
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
       <div className="video-page-second-section">
